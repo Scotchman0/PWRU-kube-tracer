@@ -39,7 +39,7 @@ spec:
     securityContext:
       privileged: true
     command: ["/bin/sh"]
-    args: ["-c", "pwru --output-tuple 'port 8080 and host $HOST'"]
+    args: ["-c", "while true; do date; sleep 1; done & pwru --output-tuple 'port 8080 and host $HOST' --timestamp current"]
   volumes:
   - name: sys-kernel-debug
     hostPath:
@@ -56,4 +56,9 @@ oc wait pod pwru --for condition=Ready --timeout=90s
 done
 }
 
-pwru_launcher
+if [ "$1" = --cleanup ];
+  then 
+    cleanup
+else
+  pwru_launcher
+fi 

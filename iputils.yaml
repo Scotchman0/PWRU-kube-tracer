@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+ name: iputils-container
+ namespace: sunbro
+spec:
+ containers:
+   - name: iputils-container
+     image: 'quay.io/rhn_support_wrussell/iputils-container:latest'
+
