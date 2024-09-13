@@ -45,7 +45,7 @@ spec:
     securityContext:
       privileged: true
     command: ["/bin/sh"]
-    args: ["-c", "while true; do date; sleep 1; done & pwru --output-tuple 'port $PORT and host $HOST' | tee /tmp/${HOST}.out"]
+    args: ["-c", "while true; do date >> /tmp/${HOST}.out; date; sleep 1; done & pwru --output-tuple 'port $PORT and host $HOST' | tee /tmp/${HOST}.out"]
   volumes:
   - name: sys-kernel-debug
     hostPath:
