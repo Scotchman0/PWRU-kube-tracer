@@ -2,6 +2,7 @@
 NODE=worker-0.sunbropwrutest.lab.upshift.rdu2.redhat.com
 #args: pwru <options> <pcap filter>
 #PWRU_ARGS="--output-tuple 'port 8080 and host $HOST'"
+PORT="8080"
 NAMESPACE=sunbro
 #    args: ["-c", "pwru ${PWRU_ARGS}"]
 
@@ -44,7 +45,7 @@ spec:
     securityContext:
       privileged: true
     command: ["/bin/sh"]
-    args: ["-c", "while true; do date; sleep 1; done & pwru --output-tuple 'port 8080 and host $HOST' | tee /tmp/${HOST}.out"]
+    args: ["-c", "while true; do date; sleep 1; done & pwru --output-tuple 'port $PORT and host $HOST' | tee /tmp/${HOST}.out"]
   volumes:
   - name: sys-kernel-debug
     hostPath:
