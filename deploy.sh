@@ -39,7 +39,7 @@ spec:
     securityContext:
       privileged: true
     command: ["/bin/sh"]
-    args: ["-c", "while true; do date; sleep 1; done & pwru --output-tuple 'port 8080 and host $HOST' --timestamp current"]
+    args: ["-c", "while true; do date; sleep 1; done & pwru --output-tuple 'port 8080 and host $HOST' | tee /tmp/${HOST}.out"]
   volumes:
   - name: sys-kernel-debug
     hostPath:
