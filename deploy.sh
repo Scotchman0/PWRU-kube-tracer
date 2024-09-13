@@ -14,6 +14,11 @@ cleanup () {
   for i in $(oc get pod | grep pwru | awk {'print $1'}); do echo $i; oc delete pod $i --force; done
 }
 
+log_gather () {
+  # get all pod logs from local storage for inspect (STDOUT pod logs rotate too fast)
+  for i in $(oc get pod -n ${NAMESPACE} | grep -v NAME | grep "pwru-" |awk {'print $1'}); do echo $i; oc rsh $i sh -c "tar -czf export.tar.gz /tmp/*" ; oc cp ${i}:export.tar.gz ./${i}_export.tar.gz; done  
+}
+
 pwru_launcher() {
 
 for i in $(oc get pod -n ${NAMESPACE} | grep -v NAME | awk {'print $1'}); 
@@ -59,6 +64,9 @@ done
 if [ "$1" = --cleanup ];
   then 
     cleanup
-else
-  pwru_launcher
+  elif [ "$1" = "--pull-logs" ];
+    then 
+      log_gather
+  else
+    pwru_launcher
 fi 
